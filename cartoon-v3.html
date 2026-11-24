@@ -1,0 +1,142 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AI Cartoon Studio V3 | Real AI Images</title>
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;color:#f0f1ff;background:#0c1024}*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#101631,#1e1541 55%,#0d1324);min-height:100vh}header{padding:30px 18px 15px;max-width:1000px;margin:auto}h1{font-size:clamp(27px,5vw,40px);margin:4px 0}h2{font-size:20px;margin:0 0 14px}.sub{color:#b8bce0;margin:8px 0;line-height:1.6}.wrap{max-width:1000px;margin:0 auto;padding:0 14px 60px}.card{border:1px solid #414071;background:#1d2143d9;border-radius:20px;padding:20px;margin:14px 0;box-shadow:0 8px 30px #0003}.note{background:#342e53;border:1px solid #645a98;color:#e0d8ff;padding:12px;border-radius:12px;font-size:13px;line-height:1.6}.good{background:#173c37;border-color:#3f8673}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}label{display:block;font-weight:650;font-size:13px;margin:11px 0 6px;color:#cdd6fc}input,select,textarea{width:100%;border-radius:11px;border:1px solid #696b99;background:#10162f;color:white;font:inherit;padding:12px;outline-offset:2px}input[type=file]{font-size:12px}textarea{min-height:120px;resize:vertical;line-height:1.5}button,.btn{border:0;background:linear-gradient(115deg,#9360fa,#6747dc);color:#fff;padding:12px 16px;border-radius:12px;font-weight:750;cursor:pointer;font:inherit}button:hover{filter:brightness(1.1)}button:disabled{opacity:.48;cursor:not-allowed}button.alt{background:#353b70}button.small{font-size:12px;padding:9px 12px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.scene{border:1px solid #4b4f80;padding:13px;border-radius:14px;background:#20294f;display:flex;flex-direction:column;gap:5px}.scene img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;background:#101529}.scene .status{min-height:1.5em;font-size:12px;color:#a9c4ff}.scene textarea{min-height:75px;font-size:12px}.scene .mini{min-height:94px}canvas{display:block;max-width:100%;max-height:70vh;margin:auto;background:#171a33;border-radius:12px}#stage{display:none}.muted{color:#abb3d9;font-size:13px;line-height:1.65}.hidden{display:none!important}.chip{background:#3a346d;border-radius:30px;font-size:12px;padding:5px 10px;display:inline-block;color:#d8cdfa}#log{white-space:pre-wrap;font-size:13px;min-height:20px;color:#c0e6cb}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.row h3{margin:3px 0;font-size:15px}.top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}a{color:#afc8ff}footer{font-size:12px;color:#a9afd2;text-align:center;padding:18px} .danger{color:#ffc7c7} .smalltext{font-size:12px} @media(max-width:500px){.card{padding:15px}.scene img{aspect-ratio:4/3}header{padding-top:18px}}
+</style><script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script></head><body>
+<header><span class="chip">V3 • AI image integration • Free-tier first</span><h1>✨ AI Cartoon Studio V3</h1><p class="sub">Original Urdu / English / Arabic cartoon stories → AI storyboard → real generated artwork → animated scene video. Keep your V1/V2 safe until V3 is tested.</p></header>
+<main class="wrap">
+<section class="card"><h2>1. Connect your private AI service</h2><p class="muted">Cloudflare Worker securely calls FLUX for cartoon images and GLM for scripts. GitHub Pages alone cannot generate AI images. Never put API tokens or the access code into GitHub files.</p><div class="fields"><div><label>Worker URL (https://…workers.dev)</label><input id="url" placeholder="https://cartoon-ai.yourname.workers.dev" type="url"></div><div><label>Private studio access code</label><input id="pin" type="password" autocomplete="off" placeholder="Set in Cloudflare Secret variable"></div></div><div class="actions"><button id="test" class="alt">Test AI connection</button><button id="health" class="alt">Check Worker deployment</button></div><p class="muted">You can prepare storyboard manually even before connecting. AI image buttons only work after Cloudflare setup.</p></section>
+<section class="card"><h2>2. Story & episode settings</h2><div class="fields"><div><label>Story source</label><select id="mode"><option value="auto">Auto original story</option><option value="manual">Paste manual script</option><option value="pdf">Upload text PDF</option></select></div><div><label>Language</label><select id="lang"><option>Urdu</option><option>English</option><option>Arabic</option></select></div><div><label>Duration of this episode</label><select id="duration"><option value="30">30 seconds (Short)</option><option value="60">60 seconds (Short)</option><option value="180">3 minutes</option><option value="240">4 minutes</option></select></div><div><label>Video format</label><select id="format"><option value="short">Vertical 9:16 Shorts</option><option value="wide">Horizontal 16:9</option></select></div><div><label>Episode number</label><input id="ep" type="number" value="1" min="1" max="10"></div><div><label>Total episodes in series</label><input id="epTotal" type="number" value="1" min="1" max="10"></div><div><label>Scenes for this episode</label><select id="sceneCount"><option value="4">4</option><option value="5" selected>5</option><option value="6">6</option><option value="8">8</option></select></div><div><label>Art style</label><select id="style"><option value="premium cinematic 3D family animation, beautiful global illumination, soft realistic materials, expressive faces">Cinematic 3D cartoon</option><option value="premium claymation stop-motion aesthetic, soft sculpted surfaces, whimsical colorful shapes">Claymation style</option><option value="beautiful hand-painted fantasy storybook illustration with cinematic composition">Storybook fantasy</option></select></div></div>
+<label>Story topic (Auto)</label><input id="topic" value="Ali and the magical rabbit discover a glowing door in a forest" placeholder="Your cartoon topic">
+<div id="scriptWrap" class="hidden"><label>Paste your own story (manual / extracted PDF)</label><textarea id="script" placeholder="Paste script, one paragraph per scene…"></textarea></div>
+<div id="pdfWrap" class="hidden"><label>Upload a text-based PDF (up to 20 MB)</label><input id="pdf" type="file" accept="application/pdf,.pdf"><p class="muted" id="pdfStatus">Scanned PDFs without selectable text are not supported in V3.</p></div>
+<label>Main character bible (reuse exact description every episode)</label><textarea id="character" style="min-height:90px">Ali is an original cheerful 8-year-old South Asian boy with round face, short black hair, large brown eyes, turquoise kurta and mustard-yellow sleeveless jacket. Nuri is a tiny white rabbit with long pink inner ears, blue eyes and a pink nose. Keep both outfits, colors and facial features consistent across scenes.</textarea>
+<div class="actions"><button id="storyAI">✨ Generate AI storyboard</button><button id="storyLocal" class="alt">Prepare scenes without AI</button><button id="saveStory" class="alt">Save project JSON</button><label style="margin:0;display:inline-block"><input id="loadProject" type="file" accept=".json,application/json" style="max-width:170px;padding:8px" aria-label="Load saved project"></label></div>
+</section>
+<section class="card"><div class="row"><h2>3. Scene images & controls</h2><span class="chip" id="sceneLabel">No scenes yet</span></div><p class="muted">Each image is freshly generated using FLUX (not fixed drawings). Same character description helps continuity but cannot guarantee identical faces. You may upload your own AI images for any scene.</p><div id="scenes" class="grid"><p class="muted">Generate a storyboard first.</p></div><div class="actions"><button id="allImages" disabled>🎨 Generate AI images for all scenes</button><button id="clearImages" class="alt" disabled>Clear images</button></div></section>
+<section class="card"><h2>4. Preview and export</h2><p class="note">Video uses cinematic camera panning/zoom over generated still images (Ken Burns animation), not characters walking/talking. To produce true animated character movement, a video-generation GPU service such as Wan 2.2 must be connected separately. Preview voice is not automatically included in exports.</p>
+<div class="fields"><div><label>Optional prerecorded narration/music (MP3, M4A, WAV)</label><input id="audioFile" type="file" accept="audio/*"></div><div><label>Voice preview language</label><select id="speakLang"><option value="ur-PK">Urdu</option><option value="en-US">English</option><option value="ar-SA">Arabic</option></select></div></div>
+<div class="actions"><button id="preview" class="alt">▶ Preview</button><button id="speak" class="alt">🔊 Speak captions (preview only)</button><button id="stop" class="alt">■ Stop</button><button id="record">⬇ Record video (WebM)</button></div><p id="status" class="muted">Please generate scenes first.</p><canvas id="canvas" width="540" height="960"></canvas><p class="muted">Export: WebM on compatible Chrome devices. MP4 is not promised; if needed, convert WebM to MP4 with an editor. Audio is included only when you upload an audio file and the device supports mixing.</p></section>
+<section class="card"><h2>Quality & YouTube checklist</h2><div class="note good">Use an original story, consistent design, clear narration and scene progression. Select the correct “Made for Kids” audience setting on YouTube. Mass-produced repetitive material may be ineligible for monetization, even if generated with AI.</div></section><p id="log" role="status"></p>
+</main><footer>V3 prototype — true AI artwork requires your own Cloudflare Worker connection; no payment or output guarantees. No passwords are stored in project exports.</footer>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+let scenes=[],running=false,stopRun=null,loadedAudio=null,canPlay=false,mediaRec=null;
+let lastMode='auto';
+function log(t,err=false){$('log').textContent=t;$('log').className=err?'danger':'';}
+function setStatus(t){$('status').textContent=t;}
+function worker(){return $('url').value.trim().replace(/\/+$/,'');}
+function cleanSettings(){return {mode:$('mode').value,lang:$('lang').value,topic:$('topic').value,script:$('script').value,character:$('character').value,style:$('style').value,episode:Number($('ep').value)||1,episodes:Number($('epTotal').value)||1,count:Number($('sceneCount').value)||5,duration:Number($('duration').value)||30,format:$('format').value};}
+async function callWorker(path,payload){
+ if(!/^https:\/\/[a-z0-9.-]+\.workers\.dev$/i.test(worker())) throw Error('Enter the full Cloudflare workers.dev URL (https://…workers.dev).');
+ if($('pin').value.length<10) throw Error('Enter your private studio access code (10+ characters).');
+ const res=await fetch(worker()+path,{method:'POST',headers:{'Content-Type':'application/json','X-Studio-Code':$('pin').value},body:JSON.stringify(payload)});
+ const data=await res.json().catch(()=>({error:'Server did not return JSON'}));
+ if(!res.ok)throw Error(data.error||'Worker returned '+res.status);
+ return data;
+}
+$('test').onclick=async()=>{log('Testing private AI service…');try{const data=await callWorker('/story',{mode:'auto',topic:'A small rabbit finds a golden star',language:'English',count:3,episode:1,episodes:1,character:'White rabbit',style:'colorful cinematic 3D children animation'});log('AI connected ✓ Storyboard test: '+(data.title||'success'));}catch(e){log(e.message,true)}};
+$('health').onclick=async()=>{try{if(!worker())throw Error('Enter Worker URL first');const r=await fetch(worker()+'/health'); const d=await r.json();log('Worker: '+JSON.stringify(d));}catch(e){log(e.message,true)}};
+function modeUI(){const m=$('mode').value;$('scriptWrap').classList.toggle('hidden',m==='auto');$('pdfWrap').classList.toggle('hidden',m!=='pdf');lastMode=m;}
+$('mode').onchange=modeUI;
+$('pdf').onchange=async ev=>{const f=ev.target.files?.[0];if(!f)return;
+if(f.size>20*1024*1024){$('pdfStatus').textContent='PDF too large (20 MB max)';return;}
+if(!window.pdfjsLib){$('pdfStatus').textContent='PDF reader library has not loaded. Check internet connection.';return;}
+$('pdfStatus').textContent='Reading PDF locally…';try{
+ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+ const pdf=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;
+ const parts=[];for(let i=1;i<=Math.min(pdf.numPages,100);i++){const page=await pdf.getPage(i);const c=await page.getTextContent();parts.push(c.items.map(x=>x.str).join(' '));}
+ const combined=parts.join('\n\n').trim();if(combined.length<40) throw Error('No selectable text found. Scanned PDFs need OCR.');
+ $('script').value=combined.slice(0,45000);$('pdfStatus').textContent=`Loaded ${pdf.numPages} page(s), ${combined.length} characters (AI analyzes first 12,000 per episode).`;
+}catch(e){$('pdfStatus').textContent='PDF error: '+e.message;}}
+function manualSplit(){const s=cleanSettings(),cnt=s.count;
+ let arr=[];if(s.mode==='auto'){
+ const k=s.lang==='Urdu'?[`ایک دن ${s.topic} کی کہانی شروع ہوئی۔`,`ہیرو کو ایک حیرت انگیز چیز ملی۔`,`دوستوں نے مل کر ایک مشکل حل کرنے کی کوشش کی۔`,`پھر ایک جادوئی راز سامنے آیا۔`,`دوستی اور ہمت سے سب خوش ہو گئے۔`]:s.lang==='Arabic'?[`في يوم جميل بدأت مغامرة ${s.topic}.`,`اكتشف البطل شيئا عجيبا.`,`تعاون الأصدقاء لحل المشكلة.`,`انكشف السر السحري.`,`انتهت القصة بالصداقة والمرح.`]:[`One day, ${s.topic}.`,`The hero discovered a mysterious clue.`,`Two friends explored a wonderful place.`,`They solved a tricky problem together.`,`Everyone learned about kindness and courage.`];
+ arr=Array.from({length:cnt},(_,i)=>k[i%k.length]);
+ }else{const txt=s.script.trim();if(!txt)throw Error('Paste your script or upload text PDF first.');let paras=txt.split(/\n\s*\n|(?<=[.!?۔؟])\s+(?=[^\n])/u).map(x=>x.trim()).filter(Boolean);if(paras.length<cnt){const words=txt.split(/\s+/u);paras=Array.from({length:cnt},(_,i)=>words.slice(Math.floor(i*words.length/cnt),Math.floor((i+1)*words.length/cnt)).join(' '));}const per=Math.ceil(paras.length/cnt);arr=Array.from({length:cnt},(_,i)=>paras.slice(i*per,(i+1)*per).join(' ').slice(0,350)).filter(Boolean);}
+ return arr.map((caption,i)=>({caption,visual:`Scene ${i+1} of a family friendly children's story. ${s.topic}. ${caption}. Character appearance: ${s.character}. ${s.style} eyes expressive, beautifully lit original fantasy environment, dynamic clear composition, artful professional 3D animated feature film still, richly detailed, soft cinematic depth of field, no letters or watermark.`,img:''}));
+}
+function normalize(arr){scenes=arr.map((x,i)=>({caption:String(x.caption||'').slice(0,800),visual:String(x.visual||'').slice(0,1800),img:x.img||'',id:i+1}));renderScenes();setStatus(`${scenes.length} scenes ready. Generate images next.`);}
+$('storyLocal').onclick=()=>{try{normalize(manualSplit());log('Scenes prepared locally. These are simple template descriptions, not AI-written.');}catch(e){log(e.message,true)}};
+$('storyAI').onclick=async()=>{let s=cleanSettings(); if(s.mode==='pdf'||s.mode==='manual'){if(s.script.trim().length<20){log('Paste script / load PDF first.',true);return;}}const b=$('storyAI');b.disabled=true;log('AI is writing a new storyboard…');try{const d=await callWorker('/story',{...s,mode:s.mode==='auto'?'auto':'manual',language:s.lang});if(!d.scenes?.length)throw Error('No scenes received');normalize(d.scenes.map(x=>({...x,img:''})));log('AI storyboard ready: '+d.title);}catch(e){log(e.message+' You can use “Prepare scenes without AI” instead.',true);}finally{b.disabled=false;}};
+function renderScenes(){const holder=$('scenes');holder.replaceChildren();$('sceneLabel').textContent=scenes.length+' scenes';$('allImages').disabled=!scenes.length;$('clearImages').disabled=!scenes.length;
+ scenes.forEach((s,i)=>{const el=document.createElement('article');el.className='scene';
+ const title=document.createElement('div');title.className='row';const h=document.createElement('h3');h.textContent=`Scene ${i+1}`;title.append(h);el.append(title);
+ const im=document.createElement('img');im.alt=`Generated illustration for scene ${i+1}`;if(s.img)im.src=s.img;el.append(im);
+ const cLabel=document.createElement('label');cLabel.textContent='Narration / caption';el.append(cLabel);
+ const cap=document.createElement('textarea');cap.value=s.caption;cap.oninput=()=>{s.caption=cap.value};el.append(cap);
+ const vLabel=document.createElement('label');vLabel.textContent='AI image prompt (editable)';el.append(vLabel);
+ const visual=document.createElement('textarea');visual.className='mini';visual.value=s.visual;visual.oninput=()=>{s.visual=visual.value};el.append(visual);
+ const stat=document.createElement('div');stat.className='status';stat.textContent=s.img?'Image ready':'No AI image yet';el.append(stat);
+ const actions=document.createElement('div');actions.className='actions';const gen=document.createElement('button');gen.className='small';gen.textContent='Generate AI image';gen.onclick=()=>generateImage(i,gen,stat,im);actions.append(gen);
+ const up=document.createElement('input');up.type='file';up.accept='image/*';up.style='display:none';up.onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{s.img=await readImageFile(file);im.src=s.img;stat.textContent='Custom image added';}catch(ex){stat.textContent=ex.message}};
+ const upl=document.createElement('button');upl.className='small alt';upl.textContent='Upload image';upl.onclick=()=>up.click();actions.append(upl,up);
+ const dl=document.createElement('button');dl.className='small alt';dl.textContent='Save image';dl.onclick=()=>{if(s.img)downloadData(s.img,`scene-${i+1}.jpg`);else stat.textContent='Generate/upload image first'};actions.append(dl);
+ el.append(actions);holder.append(el);});}
+function readImageFile(file){return new Promise((resolve,reject)=>{if(file.size>7*1024*1024)return reject(Error('Image must be under 7 MB'));const fr=new FileReader();fr.onload=()=>resolve(fr.result);fr.onerror=()=>reject(Error('File read failed'));fr.readAsDataURL(file)})}
+async function generateImage(i,btn,stat,im){btn.disabled=true;stat.textContent='Generating FLUX image…';const s=scenes[i];try{
+ const bible=$('character').value.trim();let prompt=s.visual;
+ if(!prompt.toLowerCase().includes('consistent'))prompt+=`. Character description: ${bible}.`;
+ prompt+=` Premium original children's cartoon art, professionally lit, strong color design, no words, no watermark.`;
+ const seed=38000+Number($('ep').value||1)*100+ i;
+ const res=await callWorker('/image',{prompt:prompt.slice(0,1900),seed});s.img=res.image;im.src=s.img;stat.textContent='AI image ready ✓';return true;
+ }catch(e){stat.textContent='Error: '+e.message;return false;}finally{btn.disabled=false;}}
+$('allImages').onclick=async()=>{const b=$('allImages');b.disabled=true;const nodes=[...document.querySelectorAll('.scene')];let okay=0;
+ for(let i=0;i<scenes.length;i++){if(!scenes[i].img){const btn=nodes[i].querySelector('button');const stat=nodes[i].querySelector('.status');const im=nodes[i].querySelector('img');log(`Generating image ${i+1}/${scenes.length}…`);if(await generateImage(i,btn,stat,im))okay++;}}
+ log(`${okay} images generated. If any failed, retry individually.`);b.disabled=false;};
+$('clearImages').onclick=()=>{scenes.forEach(s=>s.img='');renderScenes();log('Scene images cleared from page. Other saved copies are unaffected.');};
+function downloadData(data,name){const a=document.createElement('a');a.href=data;a.download=name;document.body.append(a);a.click();a.remove()}
+$('saveStory').onclick=()=>{const s=cleanSettings();const payload={studio:'AI Cartoon Studio V3',version:3,settings:s,scenes:scenes.map(x=>({caption:x.caption,visual:x.visual,img:x.img}))};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const url=URL.createObjectURL(blob);downloadData(url,'cartoon-studio-v3-project.json');setTimeout(()=>URL.revokeObjectURL(url),1000);};
+$('loadProject').onchange=async e=>{try{const f=e.target.files?.[0];if(!f)return;const d=JSON.parse(await f.text());if(d.version!==3 || !Array.isArray(d.scenes))throw Error('Not a V3 project');const x=d.settings||{};
+ for(const [key,id] of Object.entries({mode:'mode',lang:'lang',topic:'topic',script:'script',character:'character',style:'style',episode:'ep',episodes:'epTotal',count:'sceneCount',duration:'duration',format:'format'})){if(x[key]!=null)$(id).value=x[key];}
+ modeUI();normalize(d.scenes);log('Project restored locally. Secret access code is never saved.');}catch(ex){log(ex.message,true)}};
+function setupCanvas(){const vertical=$('format').value==='short';const c=$('canvas');c.width=vertical?540:960;c.height=vertical?960:540;return c;}
+const wrapLines=(ctx,t,maxWidth,maxLines)=>{const words=String(t).split(/\s+/u).filter(Boolean);let rows=[],current='';for(const w of words){let candidate=current?current+' '+w:w;if(ctx.measureText(candidate).width>maxWidth&&current){rows.push(current);current=w}else current=candidate}if(current)rows.push(current);return rows.slice(0,maxLines)};
+function loadBitmap(src){return new Promise(resolve=>{if(!src)return resolve(null);const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>resolve(null);im.src=src;});}
+async function prepareImages(){return Promise.all(scenes.map(s=>loadBitmap(s.img)))}
+function drawScene(ctx,image,s,p,duration,total){const W=ctx.canvas.width,H=ctx.canvas.height;
+ctx.fillStyle='#0e152b';ctx.fillRect(0,0,W,H);
+if(image){const zoom=1.07+0.10*p,scale=Math.max(W/image.width,H/image.height)*zoom;const w=image.width*scale,h=image.height*scale;
+ const dx=(W-w)/2+Math.sin(p*Math.PI*2)*Math.min(18,(w-W)/3),dy=(H-h)/2+Math.cos(p*Math.PI)*Math.min(16,(h-H)/3);
+ ctx.drawImage(image,dx,dy,w,h);
+}else{const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,'#312455');grad.addColorStop(1,'#0c3159');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+ ctx.fillStyle='#dce9ff';ctx.font=`bold ${Math.max(19,W/22)}px sans-serif`;ctx.textAlign='center';ctx.fillText('Generate an AI scene image',W/2,H/2);}
+const dark=ctx.createLinearGradient(0,H*.56,0,H);dark.addColorStop(0,'#0000');dark.addColorStop(1,'#030819e8');ctx.fillStyle=dark;ctx.fillRect(0,H*.52,W,H*.48);
+const font=Math.round(Math.max(18,Math.min(29,W/28)));ctx.font=`700 ${font}px system-ui, Arial, sans-serif`;ctx.fillStyle='#fff';ctx.textAlign='center';ctx.direction='auto';ctx.shadowColor='#000';ctx.shadowBlur=7;
+const lines=wrapLines(ctx,s.caption,W*.85,5);let y=H-32-(lines.length-1)*(font+8);
+for(const line of lines){ctx.fillText(line,W/2,y,W*.88);y+=font+8;}ctx.shadowBlur=0;
+ctx.fillStyle='#e5d8ff';ctx.font=`${Math.max(11,Math.round(W/48))}px Arial`;ctx.fillText(`${$('ep').value}/${$('epTotal').value} • AI Cartoon Studio`,W/2,25);
+ctx.fillStyle='#b589ff';ctx.fillRect(0,H-5,W*Math.min(1,total/duration),5);
+}
+function speakCaptions(){if(!window.speechSynthesis){log('Speech synthesis unavailable in this browser',true);return;}speechSynthesis.cancel();const utter=new SpeechSynthesisUtterance(scenes.map(s=>s.caption).join(' '));utter.lang=$('speakLang').value;utter.rate=.93;speechSynthesis.speak(utter);log('Device voice preview playing. Voice will NOT be recorded in video.');}
+$('speak').onclick=()=>{if(!scenes.length)return log('Prepare scenes first',true);speakCaptions()};
+$('audioFile').onchange=async e=>{const f=e.target.files?.[0];if(!f){loadedAudio=null;return;}if(f.size>60*1024*1024){log('Audio file too large (60 MB max)',true);return;}loadedAudio=f;log('Narration/audio attached: '+f.name);};
+$('stop').onclick=()=>{if(stopRun)stopRun();if(window.speechSynthesis)speechSynthesis.cancel();};
+async function playback(record){if(running)throw Error('A video is already running');if(!scenes.length)throw Error('Prepare scenes first.');
+ const c=setupCanvas(),ctx=c.getContext('2d');let images=await prepareImages();
+ const duration=Number($('duration').value),per=duration/scenes.length,fps=16;
+ if(record&&(!c.captureStream||!window.MediaRecorder))throw Error('This browser does not support WebM recording. Try Chrome on Android.');
+ let stream=null,recorder=null,parts=[],audioContext=null,audioSource=null;
+ if(record){stream=c.captureStream(fps);
+  if(loadedAudio){try{audioContext=new (window.AudioContext||window.webkitAudioContext)();const buffer=await audioContext.decodeAudioData(await loadedAudio.arrayBuffer());audioSource=audioContext.createBufferSource();audioSource.buffer=buffer;const dest=audioContext.createMediaStreamDestination();audioSource.connect(dest);audioSource.connect(audioContext.destination);dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));}catch(e){log('Audio could not be mixed: '+e.message,true);}}
+  const type=['video/webm;codecs=vp8,opus','video/webm;codecs=vp8','video/webm'].find(t=>MediaRecorder.isTypeSupported(t));
+  if(!type)throw Error('This browser cannot record WebM.');
+  recorder=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:1800000});
+  recorder.ondataavailable=e=>{if(e.data.size)parts.push(e.data)};
+  recorder.onstop=()=>{if(parts.length){const blob=new Blob(parts,{type:'video/webm'});const u=URL.createObjectURL(blob);downloadData(u,`AI-Cartoon-Episode-${$('ep').value}.webm`);setTimeout(()=>URL.revokeObjectURL(u),30000);setStatus('Video saved. Open Downloads to find the WebM file.');}else setStatus('No video data was recorded.');};
+ }
+ running=true;let halted=false;stopRun=()=>{halted=true;};let started=performance.now();
+ drawScene(ctx,images[0],scenes[0],0,duration,0);
+ if(record){recorder.start(1000);mediaRec=recorder;if(audioSource)audioSource.start();}
+ setStatus(record?'Recording in real time… Keep this tab open.':'Preview playing…');
+ return new Promise(resolve=>{let lastFrame=0;function frame(t){const elapsed=Math.min((t-started)/1000,duration),i=Math.min(scenes.length-1,Math.floor(elapsed/per)),p=(elapsed-i*per)/per;
+ if(t-lastFrame>=45){drawScene(ctx,images[i],scenes[i],p,duration,elapsed);lastFrame=t;}
+ if(!halted&&elapsed<duration){requestAnimationFrame(frame)}else{
+ running=false;stopRun=null;if(record){try{if(recorder.state!=='inactive')recorder.stop();}catch{};if(audioSource)try{audioSource.stop()}catch{};
+ stream?.getTracks().forEach(tr=>tr.stop());if(audioContext)audioContext.close().catch(()=>{});
+ }else setStatus(halted?'Preview stopped':'Preview complete.');resolve();}}
+ requestAnimationFrame(frame);});}
+$('preview').onclick=async()=>{try{await playback(false)}catch(e){log(e.message,true)}};
+$('record').onclick=async()=>{const b=$('record');b.disabled=true;try{await playback(true)}catch(e){log(e.message,true);setStatus('Recording failed.')}finally{b.disabled=false;}};
+modeUI();setupCanvas();
+</script></body></html>
